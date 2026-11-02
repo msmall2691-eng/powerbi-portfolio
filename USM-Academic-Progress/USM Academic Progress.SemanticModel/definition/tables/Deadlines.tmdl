@@ -1,0 +1,100 @@
+/// Fall 2026 deadlines from the school Google Calendar (Brightspace feeds plus hand-entered MAT 101 / BUS 260 dates).
+table Deadlines
+	lineageTag: 6b29f556-6097-6567-4d49-2f275ed5aec7
+
+	measure 'Deadline Count' = COUNTROWS(Deadlines)
+		formatString: 0
+		lineageTag: 53dce875-dfd0-0600-b262-437fa0537e74
+
+	measure Exams = CALCULATE([Deadline Count], Deadlines[Item Type] = "Exam")
+		formatString: 0
+		lineageTag: a4bab29d-a311-7b9b-2eb7-6680b7a878a6
+
+	measure Quizzes = CALCULATE([Deadline Count], Deadlines[Item Type] = "Quiz")
+		formatString: 0
+		lineageTag: e0ed8921-14b0-a17a-aee2-63c62154a526
+
+	/// Deadlines on or after today's date (updates on refresh/open).
+	measure 'Upcoming Deadlines' = CALCULATE([Deadline Count], Deadlines[Due Date] >= TODAY())
+		formatString: 0
+		lineageTag: 9e012d5e-efd4-d88a-255d-c641fa0e6d47
+
+	measure 'Next 14 Days' = CALCULATE([Deadline Count], Deadlines[Due Date] >= TODAY(), Deadlines[Due Date] < TODAY() + 14)
+		formatString: 0
+		lineageTag: d9c56400-66d5-8d61-76bc-996614aeea3c
+
+	/// Most deadlines landing in any single week.
+	measure 'Busiest Week Load' = MAXX(VALUES('Date'[Week Start]), [Deadline Count])
+		formatString: 0
+		lineageTag: 4f45b165-cc87-3dde-022d-5b8caf238020
+
+	/// Deadlines that never reach the Brightspace feed and had to be entered manually.
+	measure 'Hand-Tracked Share' = DIVIDE(CALCULATE([Deadline Count], Deadlines[Tracked Via] = "Added by hand"), [Deadline Count])
+		formatString: 0%
+		lineageTag: 3c9eb314-c072-e0e9-5e5b-9f67fab7801d
+
+	column 'Deadline Key'
+		dataType: int64
+		isHidden
+		isKey
+		formatString: 0
+		lineageTag: 9cc53680-9bea-1cfc-28b4-b07b349d8185
+		summarizeBy: none
+		sourceColumn: Deadline Key
+
+		annotation SummarizationSetBy = User
+
+	column 'Due Date'
+		dataType: dateTime
+		formatString: ddd mmm d
+		lineageTag: 6a9ed5f5-847a-96a6-c4ba-8395bb692c7f
+		summarizeBy: none
+		sourceColumn: Due Date
+
+		annotation SummarizationSetBy = User
+
+	column 'Course Code'
+		dataType: string
+		isHidden
+		lineageTag: 6788b053-4a0a-e32a-2eb7-cf85c3c3942d
+		summarizeBy: none
+		sourceColumn: Course Code
+
+		annotation SummarizationSetBy = User
+
+	column Item
+		dataType: string
+		lineageTag: 876aebca-29f7-cf84-5db6-47f8beff0fa9
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = User
+
+	column 'Item Type'
+		dataType: string
+		lineageTag: e756dc32-4682-326c-7fc5-aae698bc6a45
+		summarizeBy: none
+		sourceColumn: Item Type
+
+		annotation SummarizationSetBy = User
+
+	column 'Tracked Via'
+		dataType: string
+		lineageTag: 3d39550a-32b1-9d34-af3b-5bdff5563623
+		summarizeBy: none
+		sourceColumn: Tracked Via
+
+		annotation SummarizationSetBy = User
+
+	partition Deadlines = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("nZhfc5s4FMXf+yk0szM7zSxkkADZ3rfUSXYymzTeJm1n9k3BKmiKESuJuO6n3wsOCBKM5b7YsWN+oHvOufpzydk6FwVHf/Odd1lxdMkM95ayUpqjpVxz78bwTfOCHncl9x4VS77zNfoi2DvskYBQP1j4QeR9+PyAyDzwvnL+HWHfvymMkusqEUWK7mtc/sy1dyl0UmktZOE97IoEQN+U3KAPSqSZ0SVL+DtiqdS7eVwhgjvqiilWZopp7l0AJS02vDAHSWGfdHvzEeE5EF+ey8AzoFv2hIBpEPbgz4OgyB1EJkFxB4IxtRX7XBixgV8/7PKcPVUa/VOJn17zcohDLQfvOTTwbjlTRV3uVS2RQb9h9EfDgtE1tIv1GmBPO5SxYv1u9obRqfcnjGeL4EfoQ6XBHVojUSCTcfSRb51EnFt4OBSR+OiRJ1khEpajO1ZU8PaJPwu+RT1JHdRd9G/RinJdFXtB5DcYQ5FWLOWuKsMTnkyclhvjPvHu4hHhAHsr0EkDcC8NSnKpuUbvw3OCfkfheXg2pha2scDzoVzwYA+8hIQ+cYVw5CIPttEgwVCfEPnoLynTnJ+oB476zLZ8q0wW3IhEO6sQO2KOlJ72MaOlJ/3S++E5HS+8zQnBHehfCfcrlUyMVHXkRGG4aky8FSaDj9qoqv6ndw+xUa+ZNh7Eds4XP7x/KHkiIBUXSQLJO5vuBNjGgMSHWwFpWwEZGyMJ3kBGzUWgM9Rzg4FepeE7ve8RIq37hVNvt4Egs6HvIh8t8wqoCl0Kliq22V9+r6F+6FY8KaZ20DBKFy8S0r9P30Qyl+nO1YskdMRMe5FEfcyoF8POi8sMxaNGJL1gLIamIdMeIS9ZwIEfkCl55yaD1i+MSFnT8l6a/jKX1dpJ3pm9UTSUN/ZflPzENQw8yaBwZR0MBzHnfWqrAqSE1xSuEhjACZM5WZyImxY3DPq4UXGjTlx6jn16Tkb1DbEFWZdc/YAgQFOoG85Z8+n1ZcRetjjcAMK2AYSj9w7fQHoOuYdGVvsjru2BLsqSs9xpFRBGHRamwoEfKPhBpawQPxurQbtbMQPhL7TTyi7ug1sN76Qqs5MCHlJXzhETWOPDxHOofpiYzPdXcHFp0DepEEM6kwDfwg+d6mmTAFPIoJ4zv/aurpgWzxyVdbaQrEyzts+FNm5lXfT5XTR2hWE/0I3zajlwo0yXNLJxwNaSVyarFwHOvSOy6YBmfjAdUZuOaCwdkU0HNOFB2eeDsp+2YIradGA/eJWOhQ9tstpw9FVBNy5SJ1zcx70uu7t61BFzRL6ZxdgdwDJjZT3DE4c9TjSfIoQuhMUUIXIgxIEl0MP2iVv7xGP2ibGFvEotOOoq588MFopoPwO5KB2TPrCTiG9YccpKOw4dMUf2tNbGvSbfVjlG/x2vcjxFoC4EOkWYuyg96xMGsy+ZmH1ja1LYuNijgQKOUZp9s6sWC1fOtBjUGpYEhw1LW8PSMcNSa1hYSLcP021+vzAl2CkrLkpO5R0ZpDXu636MMeyhMakn2VLqehN1Ukum1suwTBySwxqaqlqMT7yEadsJ2FqbvD3NivzrXG6TDAbsNDtT2md1eZWJkDDNpxXM8iekn85Oox2RZN7ReidSy2pT5SAtTI1NdkYCRBdjF74x7Kw17Gz0KCvoQ4ZVho3HtdivL+s1kY8+a3jbNAdPLlWfYcu2p0JXzzKvfvWgaUZ+ATld/1lokbRrX/uBN03scAv7Hw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Deadline Key", Int64.Type}, {"Due Date", type date}, {"Course Code", type text}, {"Item", type text}, {"Item Type", type text}, {"Tracked Via", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

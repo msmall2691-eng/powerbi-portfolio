@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "USM Academic Progress"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "23261478-a751-7d51-ed7e-8d22cc64154d"
+  }
+}

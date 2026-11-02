@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "GitHub Dev Portfolio"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b333e9c0-3c97-918a-c143-a3b523a168a6"
+  }
+}

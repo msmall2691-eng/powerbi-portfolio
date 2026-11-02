@@ -1,0 +1,204 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "b82de7a6b1d284e4a0e7",
+  "position": {
+    "x": 24,
+    "y": 96,
+    "z": 3000,
+    "width": 1232,
+    "height": 300,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Repositories"
+                    }
+                  },
+                  "Property": "Project"
+                }
+              },
+              "queryRef": "Repositories.Project",
+              "nativeQueryRef": "Project"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Repositories"
+                    }
+                  },
+                  "Property": "Business Area"
+                }
+              },
+              "queryRef": "Repositories.Business Area",
+              "nativeQueryRef": "Business Area"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Repositories"
+                    }
+                  },
+                  "Property": "Project Type"
+                }
+              },
+              "queryRef": "Repositories.Project Type",
+              "nativeQueryRef": "Project Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Repositories"
+                    }
+                  },
+                  "Property": "Visibility"
+                }
+              },
+              "queryRef": "Repositories.Visibility",
+              "nativeQueryRef": "Visibility"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Commits"
+                    }
+                  },
+                  "Property": "First Commit"
+                }
+              },
+              "queryRef": "Commits.First Commit",
+              "nativeQueryRef": "First Commit"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Commits"
+                    }
+                  },
+                  "Property": "Last Commit"
+                }
+              },
+              "queryRef": "Commits.Last Commit",
+              "nativeQueryRef": "Last Commit"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Commits"
+                    }
+                  },
+                  "Property": "Total Commits"
+                }
+              },
+              "queryRef": "Commits.Total Commits",
+              "nativeQueryRef": "Total Commits"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Commits"
+                    }
+                  },
+                  "Property": "Active Days"
+                }
+              },
+              "queryRef": "Commits.Active Days",
+              "nativeQueryRef": "Active Days"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Commits"
+                    }
+                  },
+                  "Property": "Pull Requests"
+                }
+              },
+              "queryRef": "Commits.Pull Requests",
+              "nativeQueryRef": "Pull Requests"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Commits"
+                    }
+                  },
+                  "Property": "Feature Share"
+                }
+              },
+              "queryRef": "Commits.Feature Share",
+              "nativeQueryRef": "Feature Share"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Commits"
+                  }
+                },
+                "Property": "Total Commits"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Project register'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

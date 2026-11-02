@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "66bae7943a647868ef40",
+  "position": {
+    "x": 856,
+    "y": 470,
+    "z": 12000,
+    "width": 400,
+    "height": 234,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Courses"
+                    }
+                  },
+                  "Property": "Course Code"
+                }
+              },
+              "queryRef": "Courses.Course Code",
+              "nativeQueryRef": "Course Code"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Deadlines"
+                    }
+                  },
+                  "Property": "Deadline Count"
+                }
+              },
+              "queryRef": "Deadlines.Deadline Count",
+              "nativeQueryRef": "Deadline Count"
+            }
+          ]
+        },
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Deadlines"
+                    }
+                  },
+                  "Property": "Item Type"
+                }
+              },
+              "queryRef": "Deadlines.Item Type",
+              "nativeQueryRef": "Item Type"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Course \u00d7 deadline type'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

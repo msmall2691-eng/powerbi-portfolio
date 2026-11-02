@@ -1,0 +1,15 @@
+relationship b8d7f897-1aea-2ce0-85aa-4094d0a7c557
+	fromColumn: Commits.Repo
+	toColumn: Repositories.Repo
+
+relationship 6e4d0781-02c5-1852-8c0c-989c6a64cd67
+	fromColumn: Commits.Date
+	toColumn: Date.Date
+
+relationship 0baa4016-6286-9a9c-a723-1be6484012d3
+	fromColumn: 'File Changes'.'Commit Key'
+	toColumn: Commits.'Commit Key'
+
+relationship a4f20fa1-4622-b73f-bf08-2f1f667ae207
+	fromColumn: 'Tech Used'.Repo
+	toColumn: Repositories.Repo

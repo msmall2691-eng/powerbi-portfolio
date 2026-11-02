@@ -1,0 +1,126 @@
+/// Software used across The Maine Cleaning Co, M Studio and school.
+table Tools
+	lineageTag: 558fa339-57e9-9573-67bb-13e4211940cd
+
+	measure 'Tool Count' = COUNTROWS(Tools)
+		formatString: 0
+		lineageTag: 25cd0cf4-cc1b-af54-576b-46c17bca498a
+
+	measure 'Tools In Use' = CALCULATE([Tool Count], Tools[Status] IN {"In use", "Setting up", "Being replaced"})
+		formatString: 0
+		lineageTag: 217e1eb9-60f8-1dd8-3811-b1105a52ced2
+
+	measure 'Tools Retired' = CALCULATE([Tool Count], Tools[Status] IN {"Retired", "Previously used"})
+		formatString: 0
+		lineageTag: 185dbf9a-dd36-471e-17ee-2493dad4a866
+
+	/// Off-the-shelf tools retired or being retired in favour of the in-house platform.
+	measure 'Replaced by BrightBase' = CALCULATE([Tool Count], Tools[Replaced by Own Build] = "Yes")
+		formatString: 0
+		lineageTag: 097d2ea7-70ca-f5c6-d3a1-67ab490f68b8
+
+	measure Categories = DISTINCTCOUNT(Tools[Category])
+		formatString: 0
+		lineageTag: 2f010de0-7e95-3733-5e68-fc918e2251a7
+
+	measure 'Planned Tools' = CALCULATE([Tool Count], Tools[Status] = "Planned")
+		formatString: 0
+		lineageTag: e482bbd5-b8de-023a-4e38-c188108a1e58
+
+	column Tool
+		dataType: string
+		isKey
+		lineageTag: 5efa53c3-4b35-32f0-49e0-8be242f15883
+		summarizeBy: none
+		sourceColumn: Tool
+
+		annotation SummarizationSetBy = User
+
+	column Category
+		dataType: string
+		lineageTag: 4c1e56f7-f075-6035-1e3b-7e4818f8c231
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = User
+
+	column 'Used For'
+		dataType: string
+		lineageTag: 217fef54-679a-c839-2b35-1d82ab79b134
+		summarizeBy: none
+		sourceColumn: Used For
+
+		annotation SummarizationSetBy = User
+
+	column Role
+		dataType: string
+		lineageTag: 333e077e-dc3a-c7e0-ef91-273dcc3454ed
+		summarizeBy: none
+		sourceColumn: Role
+
+		annotation SummarizationSetBy = User
+
+	column Status
+		dataType: string
+		lineageTag: c714d11d-1834-c197-fb6a-0cbe2f57a206
+		summarizeBy: none
+		sourceColumn: Status
+		sortByColumn: 'Status Order'
+
+		annotation SummarizationSetBy = User
+
+	column 'Status Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d05243d0-435f-3985-4624-8603c91ff0df
+		summarizeBy: none
+		sourceColumn: Status Order
+
+		annotation SummarizationSetBy = User
+
+	column 'Replaced By'
+		dataType: string
+		lineageTag: 2cd33253-dad5-7b0b-972a-38bcac549fc3
+		summarizeBy: none
+		sourceColumn: Replaced By
+
+		annotation SummarizationSetBy = User
+
+	column Since
+		dataType: string
+		lineageTag: 7ba9ba0c-d3b1-d2d5-115f-128d0628ae0f
+		summarizeBy: none
+		sourceColumn: Since
+
+		annotation SummarizationSetBy = User
+
+	column Notes
+		dataType: string
+		lineageTag: 4e90dbb0-7c51-5a20-9f2d-c3a14e2323db
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = User
+
+	/// Yes when the tool was replaced by BrightBase, the in-house platform.
+	column 'Replaced by Own Build'
+		dataType: string
+		lineageTag: 53bdadf1-31bf-c6a5-0863-c9383b5a2fa2
+		summarizeBy: none
+		sourceColumn: Replaced by Own Build
+
+		annotation SummarizationSetBy = User
+
+	partition Tools = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("nVfbbhs3EH3PVwyEwrBhqvGlSYHmSVrHiQvLViQlQfvG3R1JhHbJDS9WlK/vIVe3uFJSNEBig0ueGc6cc4aZGFOJTHqeGbsSHx2XdGusGJmKxdhLH9z6Bz3akvGBm0oW2NVfibHSBYsH49nt1vMVPS419YOqyhd/mjzHoVvFVUmO7ZMqmE5I6SejCqVnYjJnGkilmbKKpcYSZUZ0PoQESq6YcxmquCx1uTtHU2PpWlxeXJyvF9l1RJ/jJ7vORFyLvlWzue9Lx+Lq4upadCam6XrFlrBFC5K5CZ5+uX518bI22s874i92LzKjNReeZS0yy8v9JE7Iq5qPZb2/O2Yf91JRmWIhqJEra6qK+GtjrEeyI/bKIstX+1mKzmeWC+oN7+IJpaehSihuzux3Z2OWH4IqFn1jFk70isIE7Y/XM25bMDebOg5P7iln1JBp3aFdNusFMeZq2s3RRZ+2Fy1FFO71YF5Mlqz9irLRQMS/h6NmwXlTUym9pNqUXNE59ZTNdf7y06j/SCqTFbmVLg7XYiAtoWuvxY01TQNmjblpF+L1AeRlXkX6dQuApzB5PHc4maFUJenne4eWn5QJrlpRAPXFa4E/uN/fsgFLRC/gAtIro3+EKhuQynTxg+T2gDuK/diwHs6NRvT4Lzg1Hox/hJ8Hh3XnqEn7QcTjiY+/BGnxWa5qdMgd6wzyU1AzihqF1Gx2Q8okS9N4IP4OwGxuHNPYW9UwdOagiTJG2evSY+OimDxwajpt+aJ0d47c+OyoUCqV4u1JS1AR1YMiij172Mqmgao74k7H24pLIRIPbqXzkApoNWJZeDKaRlJVS7l6k6qCPqtqlcqSrvCzstyrJ+g1sZZ3VXlDa0OIK/ALh/xiE74+T6cVhqqU+Q+d7fQ3XdWhhuD+SHspWVmNtMlbqV2BtCObOodivTNmVjF9NnbhGjieeJsOnlBpCvfTsCkKqi4r1qW0gkqL6+8HaoMo/z7kYEwZ71PCW83KiQFIEUpcdGyChaUXcE/0KbHp8vqc0I1YSzTNuEOpr9sk3huXbGuLFxcc7fiV7OpQsYfWtCYOtE+MHKpjYHU8/qtLSwmuSOwjp+KIOZDcODStO9xsbGKLOATizLID5axZdit+gqs5LoJVsMPTAd0jFr0LENfZIeiskgGFfEnrX2JZRe8OdQWQaSLfdsE6UL/tNtbMrKzrJAc5i4xMt9hZzUFy3ChXGFuicXUdNLLb61lbinNyXk6naSyD7kvl59SwrZVzAKVvYPDB8gzNEtv7d6KnZbXyqtijA7zNtvaXcozjamogiMQEm7qzQ3yEpLaoH5sleCxuLTO6CkrV0i7Yp1G+w88iz6LU42aYgpkqKOAU5cb4QwdwETVVXJ4dC9MC/K8wmIg+3oBCI66ewbaETSqk05ur+zNxz9Im0W3MUYyLeXxrdTJIxrWSie2mL0F9+xafC2hzGZ8xh2oONIemDFb3Mj+OPehN6PLikuYwsJR6bMIGfwfbC7P9isR0UJOjqHf9Ad0GmDAegsWCxmbqlxgydNOSFnPyQMYYJXFspschjGOhzbLicsbPyzCHuaAW8fdtxm0htlP6u5JsHwFplOYYY0r+IExs6ApzP35+kqHyx6AiQo5n0v0g6tGlYx4IboM0CRasbjMFazyYhueL0h6mkvRknuL7lpfuWIi1X2cbx/3Orjf5ogHY41pbNVOMgQBdRl8tQ3q48FH8JMxxfE89TqfxldA+rnbibFe7U2WdT98S7nbuDqEIjcn/29r6Mwk+K4//DQxMHnW2tNiGdm8RH2Sy+br9jEdq1Y6AvffBc9AJ7uzi0BEP7GPHv3PsEdfoA8ZHEUcUSpt1s7cPk7ejf+H8Aw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Tool", type text}, {"Category", type text}, {"Used For", type text}, {"Role", type text}, {"Status", type text}, {"Status Order", Int64.Type}, {"Replaced By", type text}, {"Since", type text}, {"Notes", type text}, {"Replaced by Own Build", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

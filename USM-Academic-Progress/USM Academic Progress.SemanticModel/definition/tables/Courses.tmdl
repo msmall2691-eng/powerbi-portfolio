@@ -1,0 +1,145 @@
+/// Courses toward the B.S. in Business Analytics & AI (120 credits required).
+table Courses
+	lineageTag: 7bf29627-e63c-0aa5-2245-55d23b64f795
+
+	measure 'Degree Credits Required' = 120
+		formatString: 0
+		lineageTag: 1a8e4310-c546-8164-211e-2a95278f523e
+
+	/// Completed at USM plus transfer credit.
+	measure 'Credits Earned' = CALCULATE(SUM(Courses[Credits]), Courses[Status] IN {"Completed", "Transferred"})
+		formatString: 0
+		lineageTag: 9b84de2a-abfb-c22b-3525-e660a270234d
+
+	measure 'Credits In Progress' = CALCULATE(SUM(Courses[Credits]), Courses[Status] = "In progress")
+		formatString: 0
+		lineageTag: 424e0796-737c-c0da-37c0-27c206eed67f
+
+	measure 'Credits Earned + In Progress' = [Credits Earned] + [Credits In Progress]
+		formatString: 0
+		lineageTag: c9b3ba0f-2bc0-caf1-7017-018af30dec24
+
+	/// Credits still to schedule after the current term.
+	measure 'Credits Remaining' = [Degree Credits Required] - [Credits Earned] - [Credits In Progress]
+		formatString: 0
+		lineageTag: e84d2d0a-8229-7d14-3045-7611dd5ae23f
+
+	measure 'Degree Progress %' = DIVIDE([Credits Earned], [Degree Credits Required])
+		formatString: 0.0%
+		lineageTag: 4f6d7068-3e06-4c24-1c6b-299b4c6b8690
+
+	measure 'Progress incl. Current Term %' = DIVIDE([Credits Earned + In Progress], [Degree Credits Required])
+		formatString: 0.0%
+		lineageTag: 30ad50ef-fd40-bfe2-e046-7b8588b24598
+
+	/// Credit-weighted GPA over graded USM courses.
+	measure 'USM GPA' = VAR graded = FILTER(Courses, NOT ISBLANK(Courses[Grade Points])) RETURN DIVIDE(SUMX(graded, Courses[Credits] * Courses[Grade Points]), SUMX(graded, Courses[Credits]))
+		formatString: 0.00
+		lineageTag: 684b4a87-0140-7c60-e281-e71f08890dba
+
+	measure 'Course Count' = COUNTROWS(Courses)
+		formatString: 0
+		lineageTag: d7a730c6-98ec-0448-c1d8-21e4048ad91a
+
+	measure 'Target Graduation' = "Dec 2028"
+		lineageTag: 4f767a6c-e86c-5acd-b489-dcb7e7911269
+
+	column 'Course Code'
+		dataType: string
+		isKey
+		lineageTag: 398f09e0-d74b-5b55-09e5-fdbae5405e0b
+		summarizeBy: none
+		sourceColumn: Course Code
+
+		annotation SummarizationSetBy = User
+
+	column 'Course Title'
+		dataType: string
+		lineageTag: 94b7f32a-ce93-3696-530d-a62f0c14b632
+		summarizeBy: none
+		sourceColumn: Course Title
+
+		annotation SummarizationSetBy = User
+
+	column Term
+		dataType: string
+		lineageTag: ca876f29-9718-e356-c4e0-7bca43422bc9
+		summarizeBy: none
+		sourceColumn: Term
+		sortByColumn: 'Term Order'
+
+		annotation SummarizationSetBy = User
+
+	column 'Term Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a9f88012-e5cb-ad91-b99d-e1d6f802424c
+		summarizeBy: none
+		sourceColumn: Term Order
+
+		annotation SummarizationSetBy = User
+
+	column Credits
+		dataType: int64
+		formatString: 0
+		lineageTag: 9960bc29-548a-6f49-e8d0-ad875d4db8b9
+		summarizeBy: sum
+		sourceColumn: Credits
+
+		annotation SummarizationSetBy = User
+
+	column Grade
+		dataType: string
+		lineageTag: f839edb6-15cf-d2ce-9dd2-689eef74fc99
+		summarizeBy: none
+		sourceColumn: Grade
+
+		annotation SummarizationSetBy = User
+
+	column 'Grade Points'
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 046d1ac5-7f41-4eb1-2a37-aefbf07b7497
+		summarizeBy: none
+		sourceColumn: Grade Points
+
+		annotation SummarizationSetBy = User
+
+	column Status
+		dataType: string
+		lineageTag: 902933fc-c3cd-e8ed-4402-022f0829e0bd
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = User
+
+	column 'Subject Area'
+		dataType: string
+		lineageTag: ad1508a3-fb6d-9bf8-d452-ef3e679a0f6d
+		summarizeBy: none
+		sourceColumn: Subject Area
+
+		annotation SummarizationSetBy = User
+
+	column Institution
+		dataType: string
+		lineageTag: 68bfa7ec-2439-3241-b8e3-30ac4114110c
+		summarizeBy: none
+		sourceColumn: Institution
+
+		annotation SummarizationSetBy = User
+
+	partition Courses = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("pZJPb5tAEMXv+RSjXDuq+ONaUW6AiGUJO5YhanpcLxOyDexGw9J+/Q44trBbtYdeltHMvB9vH2Ru4J4gczVhdqwr41vCiribDnjkmhgzptr4HlesZHU6YeeMlVbplR/kMRy+k/aQMClc294bP3jj7E21T7blQ77H24qV7V+IQU+0e0j2FUTPzwj5dgVhEHwUCylWeQHhONqV38bRLe7YOJFOLn86fsMQwxirPeKJK1RckSVWLVA9aDW+/zy9ybNHIYW4UZodaWddZ/RovOvEUxRES4wwxgQXnwNJo3tvyQsxP28+lZsPSIQb8z+Q6boRJlpylC58ZeONbX7DpBhfYE57I6RYbyG8+4KFNAYjef/BRvpJAPEMMF8eIZukmjJJ2oYOrMRKyqZuCB9U2x45MS4Q5YvCO7uGqe8lQP86qdfVDqIwkB9Fv1qjJfaTwbk8vpLPL5E+lRDdBVhQI+rc/jDsbEfWg3uBdOiNHRV/o52XzrhlIA75jf5p5EJ6jHMpC54deAezqO6hUIcLVHiFus71Fw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Course Code", type text}, {"Course Title", type text}, {"Term", type text}, {"Term Order", Int64.Type}, {"Credits", Int64.Type}, {"Grade", type text}, {"Grade Points", type number}, {"Status", type text}, {"Subject Area", type text}, {"Institution", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

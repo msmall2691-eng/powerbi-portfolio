@@ -1,0 +1,148 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "b150345b803c40a47973",
+  "position": {
+    "x": 24,
+    "y": 470,
+    "z": 11000,
+    "width": 1232,
+    "height": 234,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tools"
+                    }
+                  },
+                  "Property": "Tool"
+                }
+              },
+              "queryRef": "Tools.Tool",
+              "nativeQueryRef": "Tool"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tools"
+                    }
+                  },
+                  "Property": "Category"
+                }
+              },
+              "queryRef": "Tools.Category",
+              "nativeQueryRef": "Category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tools"
+                    }
+                  },
+                  "Property": "Used For"
+                }
+              },
+              "queryRef": "Tools.Used For",
+              "nativeQueryRef": "Used For"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tools"
+                    }
+                  },
+                  "Property": "Role"
+                }
+              },
+              "queryRef": "Tools.Role",
+              "nativeQueryRef": "Role"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tools"
+                    }
+                  },
+                  "Property": "Status"
+                }
+              },
+              "queryRef": "Tools.Status",
+              "nativeQueryRef": "Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tools"
+                    }
+                  },
+                  "Property": "Since"
+                }
+              },
+              "queryRef": "Tools.Since",
+              "nativeQueryRef": "Since"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Tools"
+                  }
+                },
+                "Property": "Status"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Tool inventory'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,19 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["Repositories", "Commits", "File Changes", "Tech Used", "Date"]
+
+ref table Repositories
+ref table Commits
+ref table 'File Changes'
+ref table 'Tech Used'
+ref table Date
+
+ref cultureInfo en-US

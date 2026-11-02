@@ -1,0 +1,48 @@
+/// Technologies declared in each project's package.json / requirements.txt.
+table 'Code Libraries'
+	lineageTag: bfe4b2de-3ce1-fcf0-84aa-dfd76768361e
+
+	measure 'Projects Using' = DISTINCTCOUNT('Code Libraries'[Project])
+		formatString: 0
+		lineageTag: bc569ea7-6fee-22cc-74fe-bac48b3956ac
+
+	measure Technologies = DISTINCTCOUNT('Code Libraries'[Technology])
+		formatString: 0
+		lineageTag: c4fd9a3d-374b-aa4e-5a45-653893cd642e
+
+	column Project
+		dataType: string
+		lineageTag: 9ab3badd-3678-2b6f-8102-b151b05b3cfd
+		summarizeBy: none
+		sourceColumn: Project
+
+		annotation SummarizationSetBy = User
+
+	column Technology
+		dataType: string
+		lineageTag: 56fcc2b6-4978-aae6-35ca-63e4369747eb
+		summarizeBy: none
+		sourceColumn: Technology
+
+		annotation SummarizationSetBy = User
+
+	column Layer
+		dataType: string
+		lineageTag: 3258734e-78f9-1c2b-0d93-2a904c2ac037
+		summarizeBy: none
+		sourceColumn: Layer
+
+		annotation SummarizationSetBy = User
+
+	partition 'Code Libraries' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("jZbRktogFIbv+xQ8gGufQTO67dY6qUl3O71DcmrYEnAIqebti3TGihyOuc3/zQH+83NIac07CDerQbTaKHMYZxs+gv2wsNacWuANW52Pyliw/WxVbaR2s7U12oFu2Ef2UqHgZhCyASaF0f0EfAtnN3+fQu6AiykbqIYj3/MeJqA1l+okPVFU1RR8PEIlrDzeb2Np5aF1y8uii7ISLTSDAjtbcvH7H1OOrjU64hR0eylIplB88FYuys8ktjoLUAzOR2MdCa557x4Ve4ZOavlwzWdjDipsrSe5T3Vd/iCJl7ea8cG1JESE6oYqTe8OFqpvG7LYjjtgSnbSSX2gSSRy9zLbmcH5ZhPUpTEbvieX8pteKJ+cbqQx5+MHJEKE+pY6SSUNXWhC3L//8T2xmqzzKh3kK1zUnljhDfasHHo6Hx6qjJcdncbGd/7pFxUhWXDlv3Pk8hZPxWpbr3b5a3QliLheGSxbVzFr65VATL1qlBtfYOyd0cAqx0d8qscIcZYYxCd5zGCHjgkivXdgLp1b3res8Lt1dhBOGo2fMsXwA6QcdoiUIg6CwNMP8wrWj/uH2E/T3DF1C2wHnfHDb9H4IY/bklBryzuw7KsJZR/ARFgSFrc7xUwDnfcyGbEJifUlgYi2pGyuK0rqc/4FDypqblCy4yOomQczaPmnMsjU8xcAzKD/Av6QBZ16nAJAuBr07DwLKjLLwndiGPtEaBAKuJ4LQ2Y0JomAxmA2djGGWRoThDV3YC5tMYaYlQI9XSMdDrGeeSe7S1fmvRsa/+eABjwi8AseI1mXbynU5Fsg88sfMVQfIi7bhlsKncIRkXr8Fw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Project", type text}, {"Technology", type text}, {"Layer", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

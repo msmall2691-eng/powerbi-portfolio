@@ -1,0 +1,120 @@
+/// One row per client. Names removed; keys are anonymized.
+table Clients
+	lineageTag: f28c91e2-4aa3-f0e5-e1b8-f313fe4c6c06
+
+	measure 'Client Count' = COUNTROWS(Clients)
+		formatString: #,0
+		lineageTag: edb02037-54bc-8346-0809-c15ee741f11e
+
+	/// Clients whose first Jobber invoice falls in the selected period.
+	measure 'New Clients' = VAR s = MIN('Date'[Date]) VAR e = MAX('Date'[Date]) RETURN COUNTROWS(FILTER(Clients, Clients[First Invoice Date] >= s && Clients[First Invoice Date] <= e))
+		formatString: #,0
+		lineageTag: c7bdd7d9-1de4-7992-7f9f-e14d7681daf6
+
+	measure 'Currently Active Clients' = CALCULATE(COUNTROWS(Clients), Clients[Client Status] = "Active")
+		formatString: #,0
+		lineageTag: 9be59240-90a4-d7f3-63a6-c8ee63bef921
+
+	/// Share of clients invoiced more than once.
+	measure 'Repeat Client Rate' = DIVIDE(COUNTROWS(FILTER(Clients, Clients[Lifetime Invoices] > 1)), COUNTROWS(Clients))
+		formatString: 0.0%
+		lineageTag: 501e6f28-fb4e-6f83-6524-ee1e3cf9fb91
+
+	measure 'Avg Lifetime Value' = AVERAGE(Clients[Lifetime Revenue])
+		formatString: \$#,0
+		lineageTag: 0c057cba-eee5-5bdf-3494-439a5861a310
+
+	/// Anonymized client ID (segment prefix + order of first invoice).
+	column 'Client Key'
+		dataType: string
+		isKey
+		lineageTag: 74bf461e-7aff-7eae-bc3e-a56f52551ed6
+		summarizeBy: none
+		sourceColumn: Client Key
+
+		annotation SummarizationSetBy = User
+
+	column Segment
+		dataType: string
+		lineageTag: 09aedc8a-091f-c83f-967a-23ddb48ca92d
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = User
+
+	/// From the median gap between a client's invoices.
+	column 'Service Cadence'
+		dataType: string
+		lineageTag: f099807b-da16-4e9d-6dc6-610700a8e9b3
+		summarizeBy: none
+		sourceColumn: Service Cadence
+
+		annotation SummarizationSetBy = User
+
+	column 'First Invoice Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4bce7337-341f-261f-d017-7457fb0657c8
+		summarizeBy: none
+		sourceColumn: First Invoice Date
+
+		annotation SummarizationSetBy = User
+
+	/// Year of the client's first invoice in Jobber.
+	column 'Cohort Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: fe244855-22a7-dcba-8fbd-2d20ec5f8f91
+		summarizeBy: none
+		sourceColumn: Cohort Year
+
+		annotation SummarizationSetBy = User
+
+	column 'Last Invoice Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 0455a20b-42fa-df33-e3ef-d796c457c609
+		summarizeBy: none
+		sourceColumn: Last Invoice Date
+
+		annotation SummarizationSetBy = User
+
+	/// Active = invoiced within 60 days of the latest invoice in the data.
+	column 'Client Status'
+		dataType: string
+		lineageTag: a0fbea2d-00a8-8417-7dfc-baa27545542e
+		summarizeBy: none
+		sourceColumn: Client Status
+
+		annotation SummarizationSetBy = User
+
+	column 'Lifetime Invoices'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a7cf565-5159-9fe5-6e2e-32d5de9eb1a7
+		summarizeBy: sum
+		sourceColumn: Lifetime Invoices
+
+		annotation SummarizationSetBy = User
+
+	column 'Lifetime Revenue'
+		dataType: double
+		formatString: \$#,0
+		lineageTag: e40f1880-a7fb-54b1-9a83-bbf5ec0099b0
+		summarizeBy: sum
+		sourceColumn: Lifetime Revenue
+
+		annotation SummarizationSetBy = User
+
+	partition Clients = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("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", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Client Key", type text}, {"Segment", type text}, {"Service Cadence", type text}, {"First Invoice Date", type date}, {"Cohort Year", Int64.Type}, {"Last Invoice Date", type date}, {"Client Status", type text}, {"Lifetime Invoices", Int64.Type}, {"Lifetime Revenue", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

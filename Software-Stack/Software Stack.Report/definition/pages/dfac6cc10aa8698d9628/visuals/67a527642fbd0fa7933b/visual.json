@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "67a527642fbd0fa7933b",
+  "position": {
+    "x": 536,
+    "y": 206,
+    "z": 6000,
+    "width": 720,
+    "height": 498,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Code Libraries"
+                    }
+                  },
+                  "Property": "Technology"
+                }
+              },
+              "queryRef": "Code Libraries.Technology",
+              "nativeQueryRef": "Technology"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Code Libraries"
+                    }
+                  },
+                  "Property": "Projects Using"
+                }
+              },
+              "queryRef": "Code Libraries.Projects Using",
+              "nativeQueryRef": "Projects Using"
+            }
+          ]
+        },
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Code Libraries"
+                    }
+                  },
+                  "Property": "Project"
+                }
+              },
+              "queryRef": "Code Libraries.Project",
+              "nativeQueryRef": "Project"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Technology \u00d7 project'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

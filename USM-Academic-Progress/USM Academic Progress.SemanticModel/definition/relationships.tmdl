@@ -1,0 +1,7 @@
+relationship ff98d44d-070e-f979-dcc3-bfb8c4266d22
+	fromColumn: Deadlines.'Course Code'
+	toColumn: Courses.'Course Code'
+
+relationship b5990dd1-5412-037c-4267-8bfe35c90f95
+	fromColumn: Deadlines.'Due Date'
+	toColumn: Date.Date

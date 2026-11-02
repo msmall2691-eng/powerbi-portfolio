@@ -1,0 +1,7 @@
+relationship 4e5a70d4-0dee-0ce1-3b41-1a6afc0c0772
+	fromColumn: Invoices.'Client Key'
+	toColumn: Clients.'Client Key'
+
+relationship e5af8a10-a155-9759-6471-bc7fdb53b58c
+	fromColumn: Invoices.'Issued Date'
+	toColumn: Date.Date

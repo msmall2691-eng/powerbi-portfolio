@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Maine Cleaning Co Operations"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "988e73f3-c99e-c7c1-92e8-2536277c008e"
+  }
+}

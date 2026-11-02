@@ -1,0 +1,58 @@
+/// One row per GitHub repository, with the project it belongs to.
+table Repositories
+	lineageTag: c5372c96-aabe-737e-8dfd-767bfbd85049
+
+	column Repo
+		dataType: string
+		isHidden
+		isKey
+		lineageTag: 44400e90-ff96-f210-9e97-d3fc8eef2ec5
+		summarizeBy: none
+		sourceColumn: Repo
+
+		annotation SummarizationSetBy = User
+
+	column Project
+		dataType: string
+		lineageTag: a1c6cae3-0e3a-74ab-6a5c-86d9dc29764c
+		summarizeBy: none
+		sourceColumn: Project
+
+		annotation SummarizationSetBy = User
+
+	column 'Business Area'
+		dataType: string
+		lineageTag: e330a18e-0ebb-bb33-083b-868e77ddb309
+		summarizeBy: none
+		sourceColumn: Business Area
+
+		annotation SummarizationSetBy = User
+
+	column 'Project Type'
+		dataType: string
+		lineageTag: 823fb497-5a69-ea85-2619-afae89eba8b3
+		summarizeBy: none
+		sourceColumn: Project Type
+
+		annotation SummarizationSetBy = User
+
+	column Visibility
+		dataType: string
+		lineageTag: bf09be37-7a4b-7ae7-6c63-57f32e9f2048
+		summarizeBy: none
+		sourceColumn: Visibility
+
+		annotation SummarizationSetBy = User
+
+	partition Repositories = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("fVNNb9swDL3nV/DYAnKx7jBgR8czsmJLNzjGroMiM44afUGim+bfj3YcZQiKXiTx6Yl8/FCDwYvf0b+gIrEcknaYEpQR5QWF9hRQ/NFJb7XRdFpso+73VKQgFYrlZCxlQtHuEdaSHUBlUDrteqi8+BUSBCNp56OFu42Um3v2rF8l4eIYDzvjj8Ia7d4eEg2d9mINm/PhvMERt0kT5kcjV0xLZq5lPCBxFIUgQ8hUO6op1KymUF5MyAQ8sPW+4lyFHHnYGq0WEa0nlJ3VbnrZTDaUE1AZjY7g6OMhn2+EO5n24pkXDuISxUGR9h+/PAfuB93hXzvn/JM3WI3QtQCrARMVEw9C9B27zmFVodgnRlEVVf3c1o14Gk0nDZD3JonyCZS3VroOZmYuNRf0LRgfMTItRn/cc/5QZ+x/7TwufZT2VvwBT4k8tyGRPIkfs8XC2boRsmkb6MdMYMrkmoF33DQuvS0ij2skDpwhbsMZer+Z59vRGGNcJyNZacznL18fC3S9WGn6PmyBU9hpg7e6Zhiauvy2ri+JkVWqGKetXVcVlCHA3eun+w9+AXPH5pCn8UNdlPwD", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Repo", type text}, {"Project", type text}, {"Business Area", type text}, {"Project Type", type text}, {"Visibility", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

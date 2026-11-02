@@ -1,0 +1,102 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "179e034e13fc2bea9be5",
+  "position": {
+    "x": 646,
+    "y": 206,
+    "z": 7000,
+    "width": 610,
+    "height": 260,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Credentials"
+                    }
+                  },
+                  "Property": "Credential"
+                }
+              },
+              "queryRef": "Credentials.Credential",
+              "nativeQueryRef": "Credential"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Credentials"
+                    }
+                  },
+                  "Property": "Provider"
+                }
+              },
+              "queryRef": "Credentials.Provider",
+              "nativeQueryRef": "Provider"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Credentials"
+                    }
+                  },
+                  "Property": "Credential Status"
+                }
+              },
+              "queryRef": "Credentials.Credential Status",
+              "nativeQueryRef": "Credential Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Credentials"
+                    }
+                  },
+                  "Property": "Timing"
+                }
+              },
+              "queryRef": "Credentials.Timing",
+              "nativeQueryRef": "Timing"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Credentials & learning outside the degree'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

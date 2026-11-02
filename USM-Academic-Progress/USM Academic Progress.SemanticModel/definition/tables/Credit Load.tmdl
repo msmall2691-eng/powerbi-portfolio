@@ -1,0 +1,35 @@
+/// What-if parameter: credits taken per term.
+table 'Credit Load'
+	lineageTag: 0ffa4800-d7d2-54d1-ebc1-6e01240bcf8a
+
+	measure 'Selected Credit Load' = SELECTEDVALUE('Credit Load'[Credits per Term], 14)
+		formatString: 0
+		lineageTag: 704be1ed-a399-d7c7-bfda-5dd3a9a39e45
+
+	/// Terms needed after Fall 2026 at the selected credit load (summer and winter sessions count as terms).
+	measure 'Terms Remaining' = ROUNDUP(DIVIDE([Credits Remaining], [Selected Credit Load]), 0)
+		formatString: 0
+		lineageTag: b361f488-5850-59d7-d725-fdc11ea1c524
+
+	column 'Credits per Term'
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: 0dd85f05-b905-a1ff-f7d9-7d05dae86fd5
+		summarizeBy: none
+		sourceColumn: Credits per Term
+
+		annotation SummarizationSetBy = User
+
+	partition 'Credit Load' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("cy5KTcksKVYoSC1SCEktyuUy4zLnsuCy5DI04DI05DI04jI05jI04TI05TI04zI05zK04AIA", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=1, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Credits per Term", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

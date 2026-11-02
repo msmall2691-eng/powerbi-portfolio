@@ -1,0 +1,131 @@
+/// Calendar table generated for this report (one row per day).
+table Date
+	lineageTag: 49d92010-e32c-c91f-62b9-698b272389bb
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: 4f525961-5423-5b9a-0d31-d20a4481ea86
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = User
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 84838987-3753-2b5d-517a-fbb0de0805ab
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column 'Quarter Num'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ae921388-fab4-ff91-7556-a74a6edb284f
+		summarizeBy: none
+		sourceColumn: Quarter Num
+
+		annotation SummarizationSetBy = User
+
+	column 'Year Quarter Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2b626b56-1860-2ca6-10f4-face3d7197eb
+		summarizeBy: none
+		sourceColumn: Year Quarter Sort
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		dataType: string
+		lineageTag: 690c9fbc-3917-643b-37d1-5146445a3b65
+		summarizeBy: none
+		sourceColumn: Quarter
+		sortByColumn: 'Year Quarter Sort'
+
+		annotation SummarizationSetBy = User
+
+	column 'Month Num'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 890817b5-e365-4d26-1488-4aadd8fa3648
+		summarizeBy: none
+		sourceColumn: Month Num
+
+		annotation SummarizationSetBy = User
+
+	column Month
+		dataType: string
+		lineageTag: 3d695862-18d6-d4b7-6202-f00c6ef73244
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: 'Month Num'
+
+		annotation SummarizationSetBy = User
+
+	column 'Year Month Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 09ce5289-7624-0ffb-b1ec-289436889b0b
+		summarizeBy: none
+		sourceColumn: Year Month Sort
+
+		annotation SummarizationSetBy = User
+
+	column 'Year Month'
+		dataType: string
+		lineageTag: 50d0c03a-e156-584b-3dd4-60408284845b
+		summarizeBy: none
+		sourceColumn: Year Month
+		sortByColumn: 'Year Month Sort'
+
+		annotation SummarizationSetBy = User
+
+	column 'Weekday Num'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: da22d33e-9d92-03ea-85da-e2d4088ce898
+		summarizeBy: none
+		sourceColumn: Weekday Num
+
+		annotation SummarizationSetBy = User
+
+	column Weekday
+		dataType: string
+		lineageTag: c010da49-7de5-8ec2-e198-e005c076dc55
+		summarizeBy: none
+		sourceColumn: Weekday
+		sortByColumn: 'Weekday Num'
+
+		annotation SummarizationSetBy = User
+
+	column 'Week Start'
+		dataType: dateTime
+		formatString: mmm d, yyyy
+		lineageTag: 7589b06a-617e-b420-1048-7145d2a66caa
+		summarizeBy: none
+		sourceColumn: Week Start
+
+		annotation SummarizationSetBy = User
+
+	partition Date = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("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", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Date", type date}, {"Year", Int64.Type}, {"Quarter Num", Int64.Type}, {"Year Quarter Sort", Int64.Type}, {"Quarter", type text}, {"Month Num", Int64.Type}, {"Month", type text}, {"Year Month Sort", Int64.Type}, {"Year Month", type text}, {"Weekday Num", Int64.Type}, {"Weekday", type text}, {"Week Start", type date}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

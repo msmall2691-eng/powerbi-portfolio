@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/1.4.0/schema.json",
+  "name": "ce9f37b4306aa11e1102",
+  "displayName": "Path to Graduation",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

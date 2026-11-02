@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Maine Cleaning Co Operations"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2ea836f5-ccde-ae4c-5c8e-b7e2245b9ce7"
+  }
+}

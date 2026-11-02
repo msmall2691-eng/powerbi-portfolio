@@ -1,0 +1,46 @@
+/// Technologies declared in each repo's dependency files.
+table 'Tech Used'
+	lineageTag: 08c27fb2-cbc7-675e-533a-2b00da0c7511
+
+	/// Repositories whose package.json or requirements.txt declares this technology.
+	measure 'Repos Using' = DISTINCTCOUNT('Tech Used'[Repo])
+		formatString: #,0
+		lineageTag: 2ea7b3b1-b561-74da-6845-403eab5ec204
+
+	column Repo
+		dataType: string
+		isHidden
+		lineageTag: 38034ac0-89e3-4f2c-fbaf-c4f64f38e036
+		summarizeBy: none
+		sourceColumn: Repo
+
+		annotation SummarizationSetBy = User
+
+	column Technology
+		dataType: string
+		lineageTag: 52005dbf-1806-c30c-e83c-10449d795bec
+		summarizeBy: none
+		sourceColumn: Technology
+
+		annotation SummarizationSetBy = User
+
+	column Layer
+		dataType: string
+		lineageTag: cb217d6e-07ea-7abf-6f96-dd6f14f7a406
+		summarizeBy: none
+		sourceColumn: Layer
+
+		annotation SummarizationSetBy = User
+
+	partition 'Tech Used' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("jZbRctsgEEXf+xX6ADn9BteTpM24GdVSk07fMNrY1Ag0gGLr74vJWGOsZcmr7jFwry4rb6DXZQN8r7TUu7FcsxHMl60Ru71b2J5xKJdVzffQDhJM+Y3xA6i2+FpUo9trdUNK6LaCZ6iVZEMLxbL6kQHvTxxkAadeG5dBH5h1+QUfoRNKfGLnR613MhzRZsjvTVP9yTBPr03BBrfPYOuBC5+L4FrZ8sFo5T7YpzrmKm3dzkD9a51ZcMMcFFJ0wgm1y7HAuKN2DUCx0YPzNSC58+tas21mQ3/8pfS96sYc6IzoIQM1TMij8PKqrqnTNUchhc4tNvZQc78rGcjvd/+mjMqs9SIcUKucdUvu8wrbohpsrj0eq7UHXK6xrW/F4o2umFgx6RWGXHi+4KBCB1JXbiKIQk8M1rtJTEY8EUi8k0YlcoDROq1gYR0by/t6LdTtKWKE8BKDz3Byd/9oBjMdE0Sfb8BUV6V/j6deagPG4gYjgvAXcbi9CMHcRUA99GzLLFAMEUDMJf0LdUp/kIKKp3JWkt0OamLmBy0964NMze4AoOFNAj5/g07N0wBQiZ715GULKnLRwnNiUnRM+JZyCUz578+Ca/971oEpfmontLpZbU4TlZzDz7oF/1TOwpmjWMRziogLgVMtnKNIkDhk82v91W2WSYx7xfwXBb0AQcGveZCw+IJAJPahp0IK6gsY/28PU+YuDXTaAWv9vzncwzVAle6aI+p2jeHJRESqitcQluK1ToQZYalMj+bwJvURj+ci4l4mNeXjAmAeLlpixl9kwt6E5KyhjbmI89L8Bw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Repo", type text}, {"Technology", type text}, {"Layer", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
