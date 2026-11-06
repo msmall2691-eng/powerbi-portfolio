@@ -1,36 +1,74 @@
-# Power BI Portfolio: Megan Small
+# Power BI Portfolio · Megan Small
 
-These are four Power BI reports built on real data from my businesses, my code and my degree. Each one is a **Power BI Project (.pbip)**: a text-based format with a TMDL semantic model and a PBIR report. That means the whole model, every DAX measure and every visual can be read and diffed in Git.
+**Business analytics on real operating data.** Four Power BI reports built from a cleaning company I run, the software I build, and my degree progress. Each one starts with a business question, uses a star-schema model with documented DAX measures, and ships as a text-based Power BI Project, so every table, measure and visual can be reviewed right here on GitHub.
 
-| Report | What it answers | Data | Pages |
+`Power BI Desktop` · `DAX` · `Power Query (M)` · `Star-schema modeling` · `Time intelligence` · `PBIP / TMDL` · `Python data prep` · `Data anonymization` · `Git`
+
+---
+
+## The reports
+
+| | Report | Business question | Data |
 |---|---|---|---|
-| **Maine Cleaning Co Operations** | How did revenue, clients and short-term-rental turnovers change from 2023 to 2026? | 3,113 Jobber invoices, 188 clients (anonymized), Mar 2023–Oct 2026 | Overview · Clients & Retention · STR Turnovers · Segments |
-| **GitHub Dev Portfolio** | What have I built, how much of it, and with what tech? | 2,412 commits, 13 repos, 1,274 PRs (full git history), Mar–Nov 2026 | Overview · Projects · Work Patterns · Tech Stack |
-| **USM Academic Progress** | Where am I on the degree, and how heavy is this term? | Course history plus 73 Fall 2026 deadlines from my school calendar | Degree Progress · Fall 2026 Workload · Path to Graduation |
-| **Software Stack** | Which tools did I buy, outgrow and replace with my own build? | 31 tools + dependency files from 10 code projects | Stack Overview · Build vs Buy · Tech in Code |
+| 🧽 | **[Maine Cleaning Co Operations](Maine-Cleaning-Co-Operations/)** | Where does revenue come from, which clients stay, and how seasonal is rental work? | 3,113 invoices · 188 clients · Mar 2023 – Oct 2026 |
+| 💻 | **[GitHub Dev Portfolio](GitHub-Dev-Portfolio/)** | What have I built, with what tech, and how does the work break down? | 2,412 commits · 1,274 pull requests · 13 repos |
+| 🧰 | **[Software Stack](Software-Stack/)** | Which tools did the business outgrow, and what replaced them? | 31 tools · dependency files from 9 code projects |
+| 🎓 | **[USM Academic Progress](USM-Academic-Progress/)** | How far along is the degree, and how heavy is this term? | Course history · 73 Fall 2026 deadlines |
 
-## How to open
+## Highlights
 
-1. Clone or download this repo (Code → Download ZIP), then **extract it**. Don't open files from inside the zip. Keep each `.pbip` next to its `.Report` and `.SemanticModel` folders.
-2. In **Power BI Desktop** (a current version), open the `.pbip` file inside a report folder.
-   * If Desktop says the report format needs a preview feature, turn on **File → Options → Preview features → "Store reports using enhanced metadata format (PBIR)"** and **"Power BI Project (.pbip) save option"**, then restart Desktop.
-3. Click **Refresh** once. The data is embedded in each query, so there are no files to locate and no credentials to enter.
-4. To share a report as a single file, use **File → Save as → .pbix**. To publish it, use **Publish → My workspace**.
+**Maine Cleaning Co Operations**
+- Commercial clients brought in **41% of revenue from 5% of clients**. Their average invoice runs **2.7× a residential clean**.
+- The **top 10 clients account for 51% of revenue**, a concentration risk the report makes visible.
+- **63% of clients booked more than once.** Cohort tracking shows how many clients from each starting year are still booking.
+- Rental turnovers peak hard: **July and August hold 34% of the year's turnovers**, versus about 7% for January and February combined.
 
-## Modeling notes (good to mention in interviews)
+**GitHub Dev Portfolio**
+- **1,274 pull requests across 160 active days** in eight months. Nearly two-thirds of all commits went into BrightBase, the operations platform that replaced the company's field-service, scheduling and CRM tools.
+- The work is mostly building, not patching: **feature commits outnumber fixes about 1.7 to 1**.
+- Full-stack spread: JavaScript 34%, Python 28%, TypeScript 26% of files changed.
 
-* **Star schemas.** The fact tables (Invoices, Commits, Deadlines) relate many-to-one to dimensions (Clients, Repositories, Courses) and to a marked Date table. Auto date/time is turned off.
-* **Time intelligence.** Revenue PY, YoY %, YTD, rolling 3-month and year-over-year client retention (`INTERSECT` of this period's and last year's client lists).
-* **Ranking and concentration.** Top-15 client bars use `RANKX` over `ALLSELECTED`. Top-10 revenue share uses `TOPN`.
-* **What-if parameter.** The *Path to Graduation* page recalculates the terms remaining for any credit load.
-* **Documented model.** Every table and most measures carry descriptions, which show as tooltips in the field list.
-* **Theme.** One custom dark theme is shared by all four reports. Its categorical palette was checked for colorblind separation and contrast.
+**Software Stack**
+- Four tools replaced so far. **Three of them (Jobber, Connecteam and a custom Twenty CRM build) were consolidated into BrightBase**, a platform I built.
 
-## Data handling
+## How the reports are built
 
-* **Cleaning company:** Dollar amounts are multiplied by one constant factor for privacy. Growth rates, shares, rankings, seasonality and retention are exact; totals are not the real figures. Client names were replaced with keys such as `RES-042`, `STR-007` and `COM-003`. Each key is the segment plus the order of the client's first invoice. No names, addresses or invoice subjects are included. Segment comes from the client name and the invoice subjects. Service cadence comes from the median gap between a client's invoices.
-* **GitHub:** Only commit metadata is used (date, repo, file types, commit type parsed from the message, PR number). Bot and merge commits are excluded. No code or commit messages are included.
-* **School:** Grades are shown for completed USM courses only. Deadlines come from the Brightspace calendar feeds plus dates I entered by hand.
-* **Tools:** This one is hand-maintained. Dates are filled in only where known. To add costs or dates, use **Transform data → Tools → Source**, or ask me to regenerate it.
+```
+Extract           Transform (Python)            Model (Power BI)              Validate
+───────           ──────────────────            ────────────────              ────────
+Jobber invoices   dedupe, classify segments,    star schema + Date table,     Microsoft JSON schemas,
+git history   ─►  anonymize clients, derive ─►  DAX measures, descriptions ─► TOM model load, field
+calendar feeds    cadence, parse commit types   on every table and measure    and layout checks
+```
 
-Snapshot taken November 2, 2026.
+- **Modeling:** fact tables (Invoices, Commits, Deadlines) join many-to-one to dimensions (Clients, Repositories, Courses) and to a marked Date table. Auto date/time is off.
+- **DAX highlights:** like-for-like year-over-year growth that only compares dates with data in both years, client retention via `INTERSECT` of this year's and last year's client sets, `RANKX`-driven top-N visuals, and a what-if parameter.
+- **Accuracy over flattery:** an independent review caught year-over-year cards comparing partial years. Those measures were rewritten to compare matching date ranges only.
+
+## Data & privacy
+
+- **Cleaning company:** client names are replaced with keys like `RES-042` and `STR-007`. **Dollar amounts are multiplied by one constant factor**, so growth rates, shares, rankings, seasonality and retention are exact, but the totals are not the real figures.
+- **GitHub:** commit metadata only (date, repo, file types, PR number). No source code or commit messages.
+- **School:** grades appear for completed courses only.
+
+## Open a report
+
+1. Click **Code → Download ZIP** and **extract** it. Don't open files from inside the zip.
+2. Open any `.pbip` file in a current version of **Power BI Desktop**. Keep it next to its `.Report` and `.SemanticModel` folders.
+3. Click **Refresh**. The data is embedded, so there's nothing to connect and no login.
+
+## Repository layout
+
+```
+<Report>/
+├── <Report>.pbip                 open this in Power BI Desktop
+├── <Report>.SemanticModel/       the data model, in TMDL (plain text)
+│   └── definition/tables/*.tmdl  one file per table: columns, DAX measures, descriptions
+└── <Report>.Report/              pages and visuals, in PBIR (JSON)
+```
+
+Start with any `tables/*.tmdl` file to read the model and measures without opening Power BI.
+
+---
+
+**Megan Small** · Business analytics & systems · B.S. Business Analytics & AI (CS minor), University of Southern Maine, in progress · [mlinx.studio](https://mlinx.studio)

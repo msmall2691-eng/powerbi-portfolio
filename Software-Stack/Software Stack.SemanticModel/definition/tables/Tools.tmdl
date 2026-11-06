@@ -14,7 +14,7 @@ table Tools
 		formatString: 0
 		lineageTag: 185dbf9a-dd36-471e-17ee-2493dad4a866
 
-	/// Off-the-shelf tools retired or being retired in favour of the in-house platform.
+	/// Off-the-shelf tools retired or being retired in favor of the in-house platform.
 	measure 'Replaced by BrightBase' = CALCULATE([Tool Count], Tools[Replaced by Own Build] = "Yes")
 		formatString: 0
 		lineageTag: 097d2ea7-70ca-f5c6-d3a1-67ab490f68b8
