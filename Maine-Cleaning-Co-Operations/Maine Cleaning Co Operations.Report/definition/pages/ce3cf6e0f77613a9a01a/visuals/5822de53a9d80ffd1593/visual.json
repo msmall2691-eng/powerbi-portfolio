@@ -62,7 +62,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Booked 2+ times (all time)'"
+                  "Value": "'Repeat clients'"
                 }
               }
             }

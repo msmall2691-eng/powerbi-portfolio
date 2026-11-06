@@ -62,27 +62,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Growth vs. same dates last year'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "subTitle": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Latest year unless a year is picked'"
+                  "Value": "'YoY growth'"
                 }
               }
             }

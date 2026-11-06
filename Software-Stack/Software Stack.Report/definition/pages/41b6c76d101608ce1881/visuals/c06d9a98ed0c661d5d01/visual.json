@@ -1,0 +1,140 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "c06d9a98ed0c661d5d01",
+  "position": {
+    "x": 24,
+    "y": 450,
+    "z": 7000,
+    "width": 1232,
+    "height": 254,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Why build BrightBase?",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "color": "#ECEEF4",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Off-the-shelf tools covered the basics, but each one solved a slice of the problem and none of them talked to each other well.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#B7BDCC",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "\u2022 Jobber (top-tier plan, about $350/month) handled quotes, scheduling and invoicing for 3,100+ invoices.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#B7BDCC",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "\u2022 Connecteam ran crew schedules and time clocks, but its API was weak and payroll timesheet exports were painful.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#B7BDCC",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "\u2022 A custom Twenty CRM build (Airbnb/VRBO iCal sync included) was tried in spring 2026 and dropped that September.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#B7BDCC",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "\u2022 BrightBase, built in-house on FastAPI + React, now covers clients, scheduling, the crew mobile app, invoicing and payroll prep, and the team uses it daily.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#B7BDCC",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -46,6 +46,19 @@
             }
           }
         }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "2L"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {

@@ -62,7 +62,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Revenue from top 10 clients'"
+                  "Value": "'Top-10 client share'"
                 }
               }
             }

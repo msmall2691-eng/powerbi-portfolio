@@ -23,11 +23,11 @@
                       "Entity": "Tools"
                     }
                   },
-                  "Property": "Categories"
+                  "Property": "Category Groups"
                 }
               },
-              "queryRef": "Tools.Categories",
-              "nativeQueryRef": "Categories"
+              "queryRef": "Tools.Category Groups",
+              "nativeQueryRef": "Category Groups"
             }
           ]
         }
@@ -62,7 +62,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Categories consolidated'"
+                  "Value": "'Areas consolidated'"
                 }
               }
             }

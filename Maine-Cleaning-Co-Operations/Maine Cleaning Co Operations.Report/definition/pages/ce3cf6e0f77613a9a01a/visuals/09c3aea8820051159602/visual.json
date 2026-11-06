@@ -62,7 +62,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'New clients in period'"
+                  "Value": "'New clients'"
                 }
               }
             }

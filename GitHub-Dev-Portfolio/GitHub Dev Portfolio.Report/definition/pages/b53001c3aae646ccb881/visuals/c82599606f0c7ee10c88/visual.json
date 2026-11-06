@@ -62,7 +62,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Share of commits that add features'"
+                  "Value": "'Feature share'"
                 }
               }
             }

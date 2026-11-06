@@ -62,7 +62,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avg lifetime value (all time)'"
+                  "Value": "'Avg lifetime value'"
                 }
               }
             }

@@ -62,7 +62,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Replaced by my own build'"
+                  "Value": "'Replaced in-house'"
                 }
               }
             }

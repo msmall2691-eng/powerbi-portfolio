@@ -2,7 +2,7 @@
 table Invoices
 	lineageTag: 86343390-b88b-24b8-a7b7-8aa022a45249
 
-	/// Total invoiced amount (scaled by a constant factor for privacy; ratios and trends are exact).
+	/// Total invoiced amount. Scaled by a constant factor for privacy; ratios and trends are exact.
 	measure Revenue = SUM(Invoices[Amount])
 		formatString: \$#,0
 		lineageTag: c1f39890-fd31-bb3f-e0cf-f18a81b6e777

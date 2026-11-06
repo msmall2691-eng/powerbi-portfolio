@@ -19,9 +19,9 @@ table Tools
 		formatString: 0
 		lineageTag: 097d2ea7-70ca-f5c6-d3a1-67ab490f68b8
 
-	measure Categories = DISTINCTCOUNT(Tools[Category])
+	measure 'Category Groups' = DISTINCTCOUNT(Tools[Category Group])
 		formatString: 0
-		lineageTag: 2f010de0-7e95-3733-5e68-fc918e2251a7
+		lineageTag: 750f419e-279b-e2dd-1799-2378a2b60968
 
 	measure 'Planned Tools' = CALCULATE([Tool Count], Tools[Status] = "Planned")
 		formatString: 0
@@ -41,6 +41,14 @@ table Tools
 		lineageTag: 4c1e56f7-f075-6035-1e3b-7e4818f8c231
 		summarizeBy: none
 		sourceColumn: Category
+
+		annotation SummarizationSetBy = User
+
+	column 'Category Group'
+		dataType: string
+		lineageTag: 6ff63ab0-aaa7-cf9a-de35-ded2ca55dbeb
+		summarizeBy: none
+		sourceColumn: Category Group
 
 		annotation SummarizationSetBy = User
 
@@ -116,10 +124,10 @@ table Tools
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(Binary.Decompress(Binary.FromText("nVfbbhs3EH3PVwyEwrBhqvGlSYHmSVrHiQvLViQlQfvG3R1JhHbJDS9WlK/vIVe3uFJSNEBig0ueGc6cc4aZGFOJTHqeGbsSHx2XdGusGJmKxdhLH9z6Bz3akvGBm0oW2NVfibHSBYsH49nt1vMVPS419YOqyhd/mjzHoVvFVUmO7ZMqmE5I6SejCqVnYjJnGkilmbKKpcYSZUZ0PoQESq6YcxmquCx1uTtHU2PpWlxeXJyvF9l1RJ/jJ7vORFyLvlWzue9Lx+Lq4upadCam6XrFlrBFC5K5CZ5+uX518bI22s874i92LzKjNReeZS0yy8v9JE7Iq5qPZb2/O2Yf91JRmWIhqJEra6qK+GtjrEeyI/bKIstX+1mKzmeWC+oN7+IJpaehSihuzux3Z2OWH4IqFn1jFk70isIE7Y/XM25bMDebOg5P7iln1JBp3aFdNusFMeZq2s3RRZ+2Fy1FFO71YF5Mlqz9irLRQMS/h6NmwXlTUym9pNqUXNE59ZTNdf7y06j/SCqTFbmVLg7XYiAtoWuvxY01TQNmjblpF+L1AeRlXkX6dQuApzB5PHc4maFUJenne4eWn5QJrlpRAPXFa4E/uN/fsgFLRC/gAtIro3+EKhuQynTxg+T2gDuK/diwHs6NRvT4Lzg1Hox/hJ8Hh3XnqEn7QcTjiY+/BGnxWa5qdMgd6wzyU1AzihqF1Gx2Q8okS9N4IP4OwGxuHNPYW9UwdOagiTJG2evSY+OimDxwajpt+aJ0d47c+OyoUCqV4u1JS1AR1YMiij172Mqmgao74k7H24pLIRIPbqXzkApoNWJZeDKaRlJVS7l6k6qCPqtqlcqSrvCzstyrJ+g1sZZ3VXlDa0OIK/ALh/xiE74+T6cVhqqU+Q+d7fQ3XdWhhuD+SHspWVmNtMlbqV2BtCObOodivTNmVjF9NnbhGjieeJsOnlBpCvfTsCkKqi4r1qW0gkqL6+8HaoMo/z7kYEwZ71PCW83KiQFIEUpcdGyChaUXcE/0KbHp8vqc0I1YSzTNuEOpr9sk3huXbGuLFxcc7fiV7OpQsYfWtCYOtE+MHKpjYHU8/qtLSwmuSOwjp+KIOZDcODStO9xsbGKLOATizLID5axZdit+gqs5LoJVsMPTAd0jFr0LENfZIeiskgGFfEnrX2JZRe8OdQWQaSLfdsE6UL/tNtbMrKzrJAc5i4xMt9hZzUFy3ChXGFuicXUdNLLb61lbinNyXk6naSyD7kvl59SwrZVzAKVvYPDB8gzNEtv7d6KnZbXyqtijA7zNtvaXcozjamogiMQEm7qzQ3yEpLaoH5sleCxuLTO6CkrV0i7Yp1G+w88iz6LU42aYgpkqKOAU5cb4QwdwETVVXJ4dC9MC/K8wmIg+3oBCI66ewbaETSqk05ur+zNxz9Im0W3MUYyLeXxrdTJIxrWSie2mL0F9+xafC2hzGZ8xh2oONIemDFb3Mj+OPehN6PLikuYwsJR6bMIGfwfbC7P9isR0UJOjqHf9Ad0GmDAegsWCxmbqlxgydNOSFnPyQMYYJXFspschjGOhzbLicsbPyzCHuaAW8fdtxm0htlP6u5JsHwFplOYYY0r+IExs6ApzP35+kqHyx6AiQo5n0v0g6tGlYx4IboM0CRasbjMFazyYhueL0h6mkvRknuL7lpfuWIi1X2cbx/3Orjf5ogHY41pbNVOMgQBdRl8tQ3q48FH8JMxxfE89TqfxldA+rnbibFe7U2WdT98S7nbuDqEIjcn/29r6Mwk+K4//DQxMHnW2tNiGdm8RH2Sy+br9jEdq1Y6AvffBc9AJ7uzi0BEP7GPHv3PsEdfoA8ZHEUcUSpt1s7cPk7ejf+H8Aw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Source = Csv.Document(Binary.Decompress(Binary.FromText("rVfbbhs3EH3PVwyEwrBhqvGlSYHmSVrHiQvJViQlQfvG3R1JhHbJDcmVonx9D7m61ZVSpWgAxzJNnrmdMzMeG1OIRHqeGrvafqB31tSV+Og4p3tjxdAULEZe+tqtv9GTzRm/4KqQGW51V2KkdMbi0Xh2u/N0RU9LTd1aFfmL302a4tG94iInx3ahMqYzUnphVKb0VDxVbKVXRjscJ8O+GM+Y+lJppqRgqXGHEiNaH+pohVw247wuwrHU+Q6IJsbSrbi+urpcH7JriS6HX9m1a+JWdK2aznxXOhY3Vze3ojU2VdsrtoQrWpBMTe3pp9tXVy9Lo/2sJf5g9yIxWnPmWZYisbzcd+KMvCr55DD2n4dwwmPKCpPNBVVyZU1REH+tjPXwfsheWbj9at9t0frMck6dwUN4ofSkLiKKmzH73dvg9odaZfOuMXMnOllmau1DxgdyVbL2wdGJ0jJU8LCz4eWcudrkenDWo5SRZ6Z1WXcOrg/EiItJO0XpfbyeNexSCPXRvBgvYXcV0xO+TsxZUjtvSsqll1SanAu6pI6yqU5ffhp2n0glsiC30tnhfPWlJZT6tbizpqrAzxFXzUFIEYC8TItA4nYG8GgmDe9O9G4gVU76+eOB5YUytStWVENR4rXAP2TgT1mBa6JTI6II/kNmZAWumja+kdwiuKPGAK0HM6PhTvgf+KP+SCSmLGutssb8d6yltcO5c1TF12D78bhGX2ppeUut0zkGZTmFtoK6BAFXGwD0FJK5qTyM/Aobycw4ppG3qmLo20GLeTC8V+inygURe+CUdN5wUOn2DO7yxekCLVR0YE/jgrKgWqRd7DWurVwrtJeWeNAhI+JaiMite+k8JAqqDllmnoymoVTFUq7exMyBKqpYxdTFmP5D6npqgdYRxcG7zL2hdbMKJ+hlDi6H2n197mEjSFUo88P0aHU31NB1Cdn/Fl9SbLol4iJvpXYZ4gogrUOW3xkzLZg+Gzt3FXqzeBsfnlFuMveDTkSbKJIsWOfSCsotUrNvtjGp/Ps6BXYeYs0xE8zKiTte4CewK/bGPihW50jJyNQWkyrDDECRIzevby8JpQxZR8WNOxTWusbi/RrvCHr4taMdd2N7PVSkgTXNYAL2J4ZHxWnQZQD72cWjCJ5FWpNTYYgecHxUV03nutu0sCP4AxxMLTsw25plu+AFGrLjrLYKrf28Tz1Ypnc1RH1xyFBSyBoFeEnrD6EcovOAegDIVIHD4UePJcXtrLbQkWy7smZqZVlG+clpVEkIbtcMD3LtTrnM2HzDKr96xq9d0Zt8XZLzcjKJ6wqUtVR+RugepXIO1+kbxHIwhwOzxPXug+hoWay8ApF3n7ZG9hpR8D2M64mBCiOpbEz2DvsJOt7if6yWkIu4t8xF6AtUSjtnH3ebw6d7ZpPA5NCJAgZ6lpko6O8cZcJWgMohUjVRnF8cs94A/J/WsSz4EC9h77x5Zq3RRmwNdH5307sQPZY2an/T47cnYpTNwk7bSiBa14g20Ii+1Orbt7BlgTV5WAcPFQ0gDlXtr3oyPcFIvzOm66trCKPkGEwo4sbQDr9TT/dTF/xC8v4d/qHbp/saUwU7dzankZn4JSYr3TXywO5wIAYMy8DjuIdDs3NtlgXnUz6aoRn6INIUPm9jaHK0XWH+lq3tyhTXihQTW8lT7IXqr7AdhXsLWRf+GGaASrFu9vpB/C4+a1rAthesIce1hXIa30E2D9pi/VPao89F9ZpF+CuDl+6YrfXoSTbj4juTZxMGQsIL18wEM8F8q9ETwlDI67j18VFrsSmMwnb6NJmEHapZVY901/Wd9kRZ5+PNaGW7fwwgMo2V6Jf1TEskFKI8/l7rmzQIemlxDSw5gv8o4/wqm8v4k6FoZtveGvXcxBjZcWG2ikf2gS3fGT5DLlFITMkszGWUJGknbx/Hb4f/QP0L", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
-				    Typed = Table.TransformColumnTypes(Blanks, {{"Tool", type text}, {"Category", type text}, {"Used For", type text}, {"Role", type text}, {"Status", type text}, {"Status Order", Int64.Type}, {"Replaced By", type text}, {"Since", type text}, {"Notes", type text}, {"Replaced by Own Build", type text}}, "en-US")
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Tool", type text}, {"Category", type text}, {"Category Group", type text}, {"Used For", type text}, {"Role", type text}, {"Status", type text}, {"Status Order", Int64.Type}, {"Replaced By", type text}, {"Since", type text}, {"Notes", type text}, {"Replaced by Own Build", type text}}, "en-US")
 				in
 				    Typed
 
